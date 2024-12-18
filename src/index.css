@@ -66,6 +66,10 @@ ul li {
   background: var(--checkBg)
 }
 
+.filter {
+  color: var(--brightBlue);
+}
+
 .add-todo, .todo-container, .todo-filter {
   background: var(--veryDarkDesaturatedBlue);
   border-radius: 5px;

@@ -5,7 +5,7 @@ import { useState } from "react";
 function App() {
   const [todos, setTodos] = useState([]);
   const [value, setValue] = useState("");
-
+  const [filter, setFilter] = useState("all");
   const itemLeft = todos.filter((todo) => todo.done === false).length;
 
   function handleSubmit(e) {
@@ -31,11 +31,9 @@ function App() {
     setTodos(newTodos);
   }
 
-  function clearTodo() {
+  function clearTodos() {
     setTodos([]);
   }
-
-  console.log("todos :", todos);
 
   return (
     <main className="main">
@@ -55,40 +53,66 @@ function App() {
         </form>
         <div className="todo-container">
           {todos.length > 0 &&
-            todos.map((todo) => (
-              <div key={todo.id} className="todo-item">
-                <div>
-                  <div
-                    className={`circle item-circle ${
-                      todo.done ? "circle-done" : ""
-                    }`}
-                  >
-                    {todo.done && <img src={check} alt="check" />}
+            todos
+              .filter((todo) => {
+                switch (filter) {
+                  case "all":
+                    return true;
+                  case "active":
+                    return !todo.done;
+                  case "completed":
+                    return todo.done;
+                }
+              })
+              .map((todo) => (
+                <div key={todo.id} className="todo-item">
+                  <div>
+                    <div
+                      className={`circle item-circle ${
+                        todo.done ? "circle-done" : ""
+                      }`}
+                    >
+                      {todo.done && <img src={check} alt="check" />}
+                    </div>
+                    <p
+                      className={todo.done ? "todo-done" : ""}
+                      onClick={() => toogleTodo(todo.id)}
+                    >
+                      {todo.text}
+                    </p>
                   </div>
-                  <p
-                    className={todo.done ? "todo-done" : ""}
-                    onClick={() => toogleTodo(todo.id)}
-                  >
-                    {todo.text}
-                  </p>
+                  <img
+                    onClick={() => deleteTodo(todo.id)}
+                    src={cross}
+                    alt="cross"
+                  />
                 </div>
-                <img
-                  onClick={() => deleteTodo(todo.id)}
-                  src={cross}
-                  alt="cross"
-                />
-              </div>
-            ))}
+              ))}
 
           <div>
             <p>{itemLeft} items left</p>
-            <p onClick={() => clearTodo()}>Clear Completed</p>
+            <p onClick={() => clearTodos()}>Clear Completed</p>
           </div>
         </div>
         <ul className="todo-filter">
-          <li>All</li>
-          <li>Active</li>
-          <li>Completed</li>
+          <li
+            className={filter === "all" ? "filter" : ""}
+            onClick={() => setFilter("all")}
+          >
+            All
+          </li>
+          <li
+            className={filter === "active" ? "filter" : ""}
+            onClick={() => setFilter("active")}
+          >
+            Active
+          </li>
+          <li
+            className={filter === "completed" ? "filter" : ""}
+            onClick={() => setFilter("completed")}
+          >
+            Completed
+          </li>
         </ul>
         <p className="dndText">Drag and drop to reorder list</p>
       </div>
