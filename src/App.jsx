@@ -1,5 +1,6 @@
 import logo from "./assets/images/icon-sun.svg";
 import cross from "./assets/images/icon-cross.svg";
+import check from "./assets/images/icon-check.svg";
 import { useState } from "react";
 function App() {
   const [todos, setTodos] = useState([]);
@@ -20,6 +21,15 @@ function App() {
     const newTodos = todos.filter((todo) => todo.id !== todoId);
     setTodos(newTodos);
   }
+
+  function toogleTodo(todoId) {
+    const newTodos = todos.map((todo) =>
+      todo.id === todoId ? { ...todo, done: !todo.done } : todo
+    );
+    setTodos(newTodos);
+  }
+
+  console.log("todos :", todos);
 
   return (
     <main className="main">
@@ -42,8 +52,15 @@ function App() {
             todos.map((todo) => (
               <div key={todo.id} className="todo-item">
                 <div>
-                  <div className="circle"></div>
-                  <p>{todo.text}</p>
+                  <div className={`circle ${todo.done ? "circle-done" : ""}`}>
+                    {todo.done && <img src={check} alt="check" />}
+                  </div>
+                  <p
+                    className={todo.done ? "todo-done" : ""}
+                    onClick={() => toogleTodo(todo.id)}
+                  >
+                    {todo.text}
+                  </p>
                 </div>
                 <img
                   onClick={() => deleteTodo(todo.id)}
