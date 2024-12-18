@@ -1,7 +1,26 @@
 import logo from "./assets/images/icon-sun.svg";
 import cross from "./assets/images/icon-cross.svg";
-
+import { useState } from "react";
 function App() {
+  const [todos, setTodos] = useState([]);
+  const [value, setValue] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newTodo = {
+      id: crypto.randomUUID(),
+      text: value,
+      done: false,
+    };
+    setTodos((oldTodo) => [...oldTodo, newTodo]);
+    setValue("");
+  }
+
+  function deleteTodo(todoId) {
+    const newTodos = todos.filter((todo) => todo.id !== todoId);
+    setTodos(newTodos);
+  }
+
   return (
     <main className="main">
       <div className="container">
@@ -9,25 +28,31 @@ function App() {
           <h1>Todo</h1>
           <img src={logo} alt="logo" />
         </div>
-        <form className="add-todo" action="">
+        <form className="add-todo" action="" onSubmit={handleSubmit}>
           <div className="circle"></div>
-          <input type="text" placeholder="Create new todo..." />
+          <input
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            type="text"
+            placeholder="Create new todo..."
+          />
         </form>
         <div className="todo-container">
-          <div className="todo-item">
-            <div>
-              <div className="circle"></div>
-              <p>Read for 1 hour</p>
-            </div>
-            <img src={cross} alt="cross" />
-          </div>
-          <div className="todo-item">
-            <div>
-              <div className="circle"></div>
-              <p>10 minutes meditations</p>
-            </div>
-            <img src={cross} alt="cross" />
-          </div>
+          {todos.length > 0 &&
+            todos.map((todo) => (
+              <div key={todo.id} className="todo-item">
+                <div>
+                  <div className="circle"></div>
+                  <p>{todo.text}</p>
+                </div>
+                <img
+                  onClick={() => deleteTodo(todo.id)}
+                  src={cross}
+                  alt="cross"
+                />
+              </div>
+            ))}
+
           <div>
             <p>5 items left</p>
             <p>Clear Completed</p>
@@ -43,5 +68,4 @@ function App() {
     </main>
   );
 }
-
 export default App;
