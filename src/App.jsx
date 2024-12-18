@@ -1,7 +1,7 @@
-import logo from "./assets/images/icon-sun.svg";
-import cross from "./assets/images/icon-cross.svg";
-import check from "./assets/images/icon-check.svg";
 import { useState } from "react";
+import Filter from "./components/Filter";
+import logo from "./assets/images/icon-sun.svg";
+import TodoItem from "./components/TodoItem";
 function App() {
   const [todos, setTodos] = useState([]);
   const [value, setValue] = useState("");
@@ -65,28 +65,12 @@ function App() {
                 }
               })
               .map((todo) => (
-                <div key={todo.id} className="todo-item">
-                  <div>
-                    <div
-                      className={`circle item-circle ${
-                        todo.done ? "circle-done" : ""
-                      }`}
-                    >
-                      {todo.done && <img src={check} alt="check" />}
-                    </div>
-                    <p
-                      className={todo.done ? "todo-done" : ""}
-                      onClick={() => toogleTodo(todo.id)}
-                    >
-                      {todo.text}
-                    </p>
-                  </div>
-                  <img
-                    onClick={() => deleteTodo(todo.id)}
-                    src={cross}
-                    alt="cross"
-                  />
-                </div>
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  toogleTodo={toogleTodo}
+                  deleteTodo={deleteTodo}
+                />
               ))}
 
           <div>
@@ -94,26 +78,7 @@ function App() {
             <p onClick={() => clearTodos()}>Clear Completed</p>
           </div>
         </div>
-        <ul className="todo-filter">
-          <li
-            className={filter === "all" ? "filter" : ""}
-            onClick={() => setFilter("all")}
-          >
-            All
-          </li>
-          <li
-            className={filter === "active" ? "filter" : ""}
-            onClick={() => setFilter("active")}
-          >
-            Active
-          </li>
-          <li
-            className={filter === "completed" ? "filter" : ""}
-            onClick={() => setFilter("completed")}
-          >
-            Completed
-          </li>
-        </ul>
+        <Filter filter={filter} setFilter={setFilter} />
         <p className="dndText">Drag and drop to reorder list</p>
       </div>
     </main>
