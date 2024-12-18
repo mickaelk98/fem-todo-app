@@ -46,6 +46,14 @@ ul li {
   margin-right: 15px;
 }
 
+.item-circle:hover {
+  position: relative;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--veryDarkDesaturatedBlue), var(--veryDarkDesaturatedBlue)) padding-box,
+              var(--checkBg) border-box;
+  cursor: pointer;
+}
+
 .todo-done {
   text-decoration: line-through;
   color: var(--darkGrayishBlue-dark) !important;

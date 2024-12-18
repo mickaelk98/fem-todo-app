@@ -6,6 +6,8 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [value, setValue] = useState("");
 
+  const itemLeft = todos.filter((todo) => todo.done === false).length;
+
   function handleSubmit(e) {
     e.preventDefault();
     const newTodo = {
@@ -52,7 +54,11 @@ function App() {
             todos.map((todo) => (
               <div key={todo.id} className="todo-item">
                 <div>
-                  <div className={`circle ${todo.done ? "circle-done" : ""}`}>
+                  <div
+                    className={`circle item-circle ${
+                      todo.done ? "circle-done" : ""
+                    }`}
+                  >
                     {todo.done && <img src={check} alt="check" />}
                   </div>
                   <p
@@ -71,7 +77,7 @@ function App() {
             ))}
 
           <div>
-            <p>5 items left</p>
+            <p>{itemLeft} items left</p>
             <p>Clear Completed</p>
           </div>
         </div>
