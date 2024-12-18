@@ -31,6 +31,10 @@ function App() {
     setTodos(newTodos);
   }
 
+  function clearTodo() {
+    setTodos([]);
+  }
+
   console.log("todos :", todos);
 
   return (
@@ -78,7 +82,7 @@ function App() {
 
           <div>
             <p>{itemLeft} items left</p>
-            <p>Clear Completed</p>
+            <p onClick={() => clearTodo()}>Clear Completed</p>
           </div>
         </div>
         <ul className="todo-filter">
