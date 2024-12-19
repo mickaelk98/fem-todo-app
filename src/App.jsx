@@ -73,12 +73,13 @@ function App() {
                 />
               ))}
 
-          <div>
+          <div className="todo-filter-content">
             <p>{itemLeft} items left</p>
+            <Filter filter={filter} setFilter={setFilter} device={"tabletPc"} />
             <p onClick={() => clearTodos()}>Clear Completed</p>
           </div>
         </div>
-        <Filter filter={filter} setFilter={setFilter} />
+        <Filter filter={filter} setFilter={setFilter} device={"mobile"} />
         <p className="dndText">Drag and drop to reorder list</p>
       </div>
     </main>

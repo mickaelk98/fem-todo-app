@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-function Filter({ filter, setFilter }) {
+function Filter({ filter, setFilter, device }) {
   return (
-    <ul className="todo-filter">
+    <ul className={`todo-filter ${device}`}>
       <li
         className={filter === "all" ? "filter" : ""}
         onClick={() => setFilter("all")}
@@ -28,6 +28,7 @@ function Filter({ filter, setFilter }) {
 Filter.propTypes = {
   filter: PropTypes.string.isRequired,
   setFilter: PropTypes.func.isRequired,
+  device: PropTypes.string.isRequired,
 };
 
 export default Filter;
