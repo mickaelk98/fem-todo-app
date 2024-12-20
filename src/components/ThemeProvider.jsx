@@ -10,20 +10,21 @@ function ThemeProvider({ children }) {
   }
 
   const toogleBg = () => {
+    const bg = document.querySelector("#bg");
     const isMobile = window.innerWidth < 375;
     const deviceType = isMobile ? "mobile" : "desktop";
     const themeType = theme === "dark" ? "dark" : "light";
 
-    // Supprimer toutes les classes possibles
-    document.body.classList.remove(
-      "body-bg-dark-mobile",
-      "body-bg-light-mobile",
-      "body-bg-dark-desktop",
-      "body-bg-light-desktop"
+    bg.classList.remove(
+      "bg-image-dark-mobile",
+      "bg-image-light-mobile",
+      "bg-image-dark-desktop",
+      "bg-image-light-desktop"
     );
+    document.body.classList.remove("bg-dark", "bg-light");
 
-    // Ajouter uniquement la classe correspondante
-    document.body.classList.add(`body-bg-${themeType}-${deviceType}`);
+    bg.classList.add(`bg-image-${themeType}-${deviceType}`);
+    document.body.classList.add(`${theme === "dark" ? "bg-dark" : "bg-light"}`);
   };
 
   useEffect(() => {

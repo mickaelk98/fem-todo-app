@@ -62,6 +62,7 @@ function App() {
 
   return (
     <main className="main">
+      <div id="bg"></div>
       <div className="container">
         <TodoHead toogleTheme={toogleTheme} />
         <TodoForm addTodo={addTodo} />
