@@ -6,21 +6,21 @@
 
 :root {
   /*primary*/
-  --brightBlue: hsl(220, 98%, 61%);
+  --brightBlue: hsl(223, 98%, 61%);
   --checkBg: linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
 
    /*light theme*/
    --veryLightGray: hsl(0, 0%, 98%);
-   --veryLightGrayishBlue: hsl(236, 33%, 92%);
-   --lightGrayishBlue: hsl(233, 11%, 84%);
-   --darkGrayishBlue: hsl(236, 9%, 61%);
-   --veryDarkGrayishBlue: hsl(235, 19%, 35%);
+   --veryLightGrayishBlue: hsl(236, 33%, 94%);
+   --lightGrayishBlue: hsl(233, 11%, 85%);
+   --darkGrayishBlue: hsl(236, 9%, 63%);
+   --veryDarkGrayishBlue: hsl(235, 19%, 36%);
  
    /*dark theme*/
    --veryDarkBlue: hsl(235, 21%, 11%);
    --veryDarkDesaturatedBlue: hsl(235, 24%, 19%);
-   --lightGrayishBlue-dark: hsl(234, 39%, 85%);
-   --lightGrayishBlueHover: hsl(236, 33%, 92%);
+   --lightGrayishBlue-dark: hsl(234, 39%, 90%);
+   --lightGrayishBlueHover: hsl(236, 33%, 94%);
    --darkGrayishBlue-dark: hsl(234, 11%, 52%);
    --veryDarkGrayishBlue1: hsl(233, 14%, 35%);
    --veryDarkGrayishBlue2: hsl(237, 14%, 26%);
@@ -29,7 +29,6 @@
 /* General */
 
 html, body {
-  background: url(../src/assets/images/bg-mobile-dark.jpg) var(--veryDarkBlue) no-repeat;
   font-size: 18px;
   font-family: "Josefin Sans", serif;
 }
@@ -44,14 +43,6 @@ ul li {
   border: 1px solid var(--darkGrayishBlue-dark);
   border-radius: 50%;
   margin-right: 15px;
-}
-
-.item-circle:hover {
-  position: relative;
-  border: 1px solid transparent;
-  background: linear-gradient(var(--veryDarkDesaturatedBlue), var(--veryDarkDesaturatedBlue)) padding-box,
-              var(--checkBg) border-box;
-  cursor: pointer;
 }
 
 .todo-done {
@@ -75,7 +66,6 @@ ul li {
 }
 
 .add-todo, .todo-container, .todo-filter {
-  background: var(--veryDarkDesaturatedBlue);
   border-radius: 5px;
 }
 
@@ -106,6 +96,10 @@ ul li {
   font-size: 27px;
 }
 
+.head img {
+  cursor: pointer;
+}
+
 .add-todo {
   display: flex;
   align-items: center;
@@ -119,7 +113,6 @@ ul li {
   background: none;
   border: none;
   padding: 5px 0;
-  color: var(--darkGrayishBlue-dark);
 }
 
 .add-todo input {
@@ -188,13 +181,59 @@ ul li {
   color: var(--darkGrayishBlue-dark);
 }
 
-
-@media screen and (min-width: 375px) {
-  html, body {
-    background: url(../src/assets/images/bg-desktop-dark.jpg) var(--veryDarkBlue) no-repeat;
-  }
+/** dark theme */
+.body-bg-dark-mobile {
+  background: url(../src/assets/images/bg-mobile-dark.jpg);
+  background-color: var(--veryDarkBlue);
+  background-repeat: no-repeat;
 }
 
+.body-bg-dark-desktop {
+  background: url(../src/assets/images/bg-desktop-dark.jpg);
+  background-color: var(--veryDarkBlue);
+  background-repeat: no-repeat;
+}
+
+.dark-shadow {
+  box-shadow: var(--veryDarkBlue) 0px 10px 10px 0px;
+}
+
+.item-circle-dark:hover {
+  position: relative;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--veryDarkDesaturatedBlue), var(--veryDarkDesaturatedBlue)) padding-box,
+              var(--checkBg) border-box;
+  cursor: pointer;
+}
+
+/** light theme  */
+.body-bg-light-mobile {
+  background-image: url(../src/assets/images/bg-mobile-light.jpg);
+  background-color: var(--veryLightGray);
+  background-repeat: no-repeat;  
+}
+
+.body-bg-light-desktop {
+  background-image: url(../src/assets/images/bg-desktop-light.jpg);
+  background-color: var(--veryLightGray);
+  background-repeat: no-repeat;  
+}
+
+.light-shadow {
+  box-shadow: var(--darkGrayishBlue) 0px 10px 10px 0px;
+}
+
+.item-circle-light:hover {
+  position: relative;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--veryLightGrayishBlue), var(--veryLightGrayishBlue)) padding-box,
+              var(--checkBg) border-box;
+  cursor: pointer;
+}
+
+.filter-item-light:hover, .todo-filter-content-light:hover {
+  color: var(--veryDarkGrayishBlue) !important;
+}
 
 @media screen and (min-width: 768px) {
 
@@ -214,7 +253,6 @@ ul li {
 
 @media screen and (min-width: 1440px) {
   html, body {
-    background: url(../src/assets/images/bg-desktop-dark.jpg) var(--veryDarkBlue) no-repeat;
-    background-position-x: center;
+    background-position-x: center !important;
   }
 }

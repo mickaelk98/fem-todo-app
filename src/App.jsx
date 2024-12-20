@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Filter from "./components/Filter";
-import logo from "./assets/images/icon-sun.svg";
+import sun from "./assets/images/icon-sun.svg";
+import moon from "./assets/images/icon-moon.svg";
 import TodoItem from "./components/TodoItem";
+import ThemeContext from "./context/ThemeContext";
 function App() {
   const [todos, setTodos] = useState([]);
   const [value, setValue] = useState("");
   const [filter, setFilter] = useState("all");
   const itemLeft = todos.filter((todo) => todo.done === false).length;
+  const { theme, toogleTheme } = useContext(ThemeContext);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -40,18 +43,48 @@ function App() {
       <div className="container">
         <div className="head">
           <h1>Todo</h1>
-          <img src={logo} alt="logo" />
+          <img
+            onClick={() => toogleTheme()}
+            src={theme === "dark" ? sun : moon}
+            alt="logo"
+          />
         </div>
-        <form className="add-todo" action="" onSubmit={handleSubmit}>
+        <form
+          style={{
+            background:
+              theme === "dark"
+                ? "var(--veryDarkDesaturatedBlue)"
+                : "var(--veryLightGrayishBlue)",
+          }}
+          className="add-todo"
+          action=""
+          onSubmit={handleSubmit}
+        >
           <div className="circle"></div>
           <input
+            style={{
+              color:
+                theme === "dark"
+                  ? "var(--darkGrayishBlue-dark)"
+                  : "var(--veryDarkGrayishBlue)",
+            }}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             type="text"
             placeholder="Create new todo..."
           />
         </form>
-        <div className="todo-container">
+        <div
+          style={{
+            background:
+              theme === "dark"
+                ? "var(--veryDarkDesaturatedBlue)"
+                : "var(--veryLightGrayishBlue)",
+          }}
+          className={`todo-container ${
+            theme === "dark" ? "dark-shadow" : "light-shadow"
+          }`}
+        >
           {todos.length > 0 &&
             todos
               .filter((todo) => {
@@ -73,14 +106,49 @@ function App() {
                 />
               ))}
 
-          <div className="todo-filter-content">
-            <p>{itemLeft} items left</p>
-            <Filter filter={filter} setFilter={setFilter} device={"tabletPc"} />
-            <p onClick={() => clearTodos()}>Clear Completed</p>
+          <div
+            style={{
+              color:
+                theme === "dark"
+                  ? "var(--darkGrayishBlue-dark)"
+                  : "var(--darkGrayishBlue)",
+            }}
+            className="todo-filter-content"
+          >
+            <p
+              className={`${
+                theme === "light" ? "todo-filter-content-light" : ""
+              }`}
+            >
+              {itemLeft} items left
+            </p>
+            <Filter filter={filter} setFilter={setFilter} other={"tabletPc"} />
+            <p
+              className={`${
+                theme === "light" ? "todo-filter-content-light" : ""
+              }`}
+              onClick={() => clearTodos()}
+            >
+              Clear Completed
+            </p>
           </div>
         </div>
-        <Filter filter={filter} setFilter={setFilter} device={"mobile"} />
-        <p className="dndText">Drag and drop to reorder list</p>
+        <Filter
+          filter={filter}
+          setFilter={setFilter}
+          other={`mobile ${theme === "dark" ? "dark-shadow" : "light-shadow"}`}
+        />
+        <p
+          style={{
+            color:
+              theme === "dark"
+                ? "var(--darkGrayishBlue-dark)"
+                : "var(--veryDarkGrayishBlue)",
+          }}
+          className="dndText"
+        >
+          Drag and drop to reorder list
+        </p>
       </div>
     </main>
   );
