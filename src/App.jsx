@@ -1,4 +1,18 @@
 import { useContext, useState } from "react";
+import {
+  DndContext,
+  closestCenter,
+  useSensor,
+  useSensors,
+  MouseSensor,
+  TouchSensor,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 import Filter from "./components/Filter";
 import TodoItem from "./components/TodoItem";
 import ThemeContext from "./context/ThemeContext";
@@ -11,6 +25,20 @@ function App() {
   const [filter, setFilter] = useState("all");
   const itemLeft = todos.filter((todo) => todo.done === false).length;
   const { theme, toogleTheme } = useContext(ThemeContext);
+
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setTodos((prevTodo) => {
+        const oldIndex = prevTodo.findIndex((todo) => todo.id === active.id);
+        const newIndex = prevTodo.findIndex((todo) => todo.id === over.id);
+        return arrayMove(prevTodo, oldIndex, newIndex);
+      });
+    }
+  };
 
   function addTodo(newTodo) {
     setTodos((oldTodo) => [...oldTodo, newTodo]);
@@ -48,26 +76,39 @@ function App() {
             theme === "dark" ? "dark-shadow" : "light-shadow"
           }`}
         >
-          {todos.length > 0 &&
-            todos
-              .filter((todo) => {
-                switch (filter) {
-                  case "all":
-                    return true;
-                  case "active":
-                    return !todo.done;
-                  case "completed":
-                    return todo.done;
-                }
-              })
-              .map((todo) => (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  toogleTodo={toogleTodo}
-                  deleteTodo={deleteTodo}
-                />
-              ))}
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            modifiers={[restrictToParentElement]}
+          >
+            <SortableContext
+              items={todos}
+              strategy={verticalListSortingStrategy}
+            >
+              {todos.length > 0 &&
+                todos
+                  .filter((todo) => {
+                    switch (filter) {
+                      case "all":
+                        return true;
+                      case "active":
+                        return !todo.done;
+                      case "completed":
+                        return todo.done;
+                    }
+                  })
+                  .map((todo) => (
+                    <TodoItem
+                      key={todo.id}
+                      id={todo.id}
+                      todo={todo}
+                      toogleTodo={toogleTodo}
+                      deleteTodo={deleteTodo}
+                    />
+                  ))}
+            </SortableContext>
+          </DndContext>
 
           <TodoInformation
             itemLeft={itemLeft}
