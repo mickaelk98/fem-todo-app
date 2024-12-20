@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ThemeContext from "../context/ThemeContext";
 
 function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
 
   function toogleTheme() {
     setTheme(theme === "dark" ? "light" : "dark");
